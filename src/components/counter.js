@@ -1,31 +1,20 @@
 import React from "react";
 import { connect } from "react-redux";
-import { inc, dec, rnd } from "../actions";
+import * as actions from "../actions";
+import { bindActionCreators } from "redux";
 
 const Counter = (props) => {
-	const { count, onDecrease, onIncrease, onRandom } = props;
+	const { count, dec, inc, rnd } = props;
 	return (
 		<div className="jumbotron jumbotron-icon">
 			<h1>{count}</h1>
-			<button
-				onClick={onDecrease}
-				type="button"
-				className="btn btn-primary"
-			>
+			<button onClick={dec} type="button" className="btn btn-primary">
 				DEC
 			</button>
-			<button
-				onClick={onIncrease}
-				type="button"
-				className="btn btn-primary"
-			>
+			<button onClick={inc} type="button" className="btn btn-primary">
 				INC
 			</button>
-			<button
-				onClick={onRandom}
-				type="button"
-				className="btn btn-primary"
-			>
+			<button onClick={rnd} type="button" className="btn btn-primary">
 				RND
 			</button>
 		</div>
@@ -37,10 +26,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-	return {
-		onDecrease: () => dispatch(dec()),
-		onIncrease: () => dispatch(inc()),
-		onRandom: (value) => dispatch(rnd(value)),
-	};
+	return bindActionCreators(actions, dispatch);
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(Counter);
